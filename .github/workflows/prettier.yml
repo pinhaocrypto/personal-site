@@ -2,9 +2,8 @@
 name: Prettier
 
 on:
-  # 我們暫時禁用自動觸發
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -33,12 +32,11 @@ jobs:
           key: prettier-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.gitignore') }}
       - run: npm run format
       - run: git restore .github/workflows
-      # 暫時移除 GitHub App Token 使用
-      # - uses: actions/create-github-app-token@v1
-      #   id: generate-token
-      #   with:
-      #     app-id: ${{ secrets.ECOSPARK_APP_ID }}
-      #     private-key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
+      - uses: actions/create-github-app-token@v1
+        id: generate-token
+        with:
+          app-id: ${{ secrets.ECOSPARK_APP_ID }}
+          private-key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
       - uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7
         with:
           body: I ran `npm run format` 🧑‍💻
@@ -47,4 +45,4 @@ jobs:
           labels: 🤖 bot
           sign-commits: true
           title: "chore(prettier): 🤖 ✨"
-          token: ${{ github.token }}  # 使用默認的 GITHUB_TOKEN 替代
+          token: ${{ steps.generate-token.outputs.token }}
