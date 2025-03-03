@@ -33,6 +33,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
+      - name: Debug Environment Variables
+        run: |
+          echo "Checking if Sanity environment variables are set (masked for security):"
+          if [ -n "$NEXT_PUBLIC_SANITY_PROJECT_ID" ]; then
+            echo "NEXT_PUBLIC_SANITY_PROJECT_ID is set (value masked)"
+          else
+            echo "NEXT_PUBLIC_SANITY_PROJECT_ID is NOT set"
+          fi
+          if [ -n "$NEXT_PUBLIC_SANITY_DATASET" ]; then
+            echo "NEXT_PUBLIC_SANITY_DATASET is set (value masked)"
+          else
+            echo "NEXT_PUBLIC_SANITY_DATASET is NOT set"
+          fi
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+        
       - name: Build with Next.js
         run: npm run build
         env:
