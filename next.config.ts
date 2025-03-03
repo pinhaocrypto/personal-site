@@ -12,11 +12,11 @@ const config: NextConfig = {
   },
   typescript: {
     // Set this to false if you want production builds to abort if there's type errors
-    ignoreBuildErrors: process.env.VERCEL_ENV === 'production',
+    ignoreBuildErrors: process.env.NODE_ENV === 'production',
   },
   eslint: {
     /// Set this to false if you want production builds to abort if there's lint errors
-    ignoreDuringBuilds: process.env.VERCEL_ENV === 'production',
+    ignoreDuringBuilds: process.env.NODE_ENV === 'production',
   },
   logging: {
     fetches: {
