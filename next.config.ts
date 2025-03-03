@@ -8,15 +8,8 @@ const config: NextConfig = {
     reactCompiler: true,
   },
   images: {
-    remotePatterns: [
-      {hostname: 'cdn.sanity.io'},
-      {hostname: 'source.unsplash.com'},
-    ],
-    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [{hostname: 'cdn.sanity.io'}],
   },
-  output: 'export',  
-  basePath: process.env.NODE_ENV === 'production' ? '/pinhaocrypto.github.io' : '',  
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/pinhaocrypto.github.io' : '',
   typescript: {
     // Set this to false if you want production builds to abort if there's type errors
     ignoreBuildErrors: process.env.VERCEL_ENV === 'production',
